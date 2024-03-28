@@ -68,10 +68,11 @@ function createCharts(metadata, samples){
     }],[{
         x: samples.otu_ids,
         y: samples.sample_values,
-        mode: 'markers',
+        mode: "markers",
         marker: {
           size: samples.sample_values,
-          color: samples.otu_ids
+          color: samples.otu_ids,
+          colorscale: "Earth"
         },
         text: samples.otu_labels
     }],[{
