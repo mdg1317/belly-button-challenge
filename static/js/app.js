@@ -26,8 +26,9 @@ function optionChanged(data, value){
         return parseInt(item.id) === parseInt(value);
     });
 
+    // Set "Demographic Info" table and create charts
     setDemographicInfo(metadata);
-    createCharts(samples);
+    createCharts(metadata, samples);
 }
 
 function setDemographicInfo(metadata){
@@ -41,7 +42,7 @@ function setDemographicInfo(metadata){
     d3.select("#info-wfreq").text(`wfreq: ${metadata.wfreq}`);
 }
 
-function createCharts(samples){
+function createCharts(metadata, samples){
     // Put samples into easier-to-work-with array
     let sortedSamples = [];
     for(let i = 0; i < samples.otu_ids.length; i++){
@@ -73,9 +74,24 @@ function createCharts(samples){
           color: samples.otu_ids
         },
         text: samples.otu_labels
+    }],[{
+        domain: {
+            x: [0, 1],
+            y: [0, 1]
+        },
+        value: metadata.wfreq,
+        title: {
+            text: "Belly Button Washing Frequency"
+        },
+        type: "indicator",
+        mode: "gauge+number",
+        gauge: {
+            axis:{range: [0, 9]}
+        }
     }]];
     
     // Plot the charts
     Plotly.newPlot("bar", traceArr[0]);
     Plotly.newPlot("bubble", traceArr[1]);
+    Plotly.newPlot("gauge", traceArr[2]);
 }
